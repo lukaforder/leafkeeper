@@ -4,8 +4,6 @@ LeafKeeper is a user-friendly tool designed to help plant enthusiasts and garden
 
 Alongside this features an assitant green-thumb robot using GPT to assist in ideas, suggestions, and inspriation for your plants. 
 
----
-
 ## Planned Features
 
 ### 1. Plant Monitoring
