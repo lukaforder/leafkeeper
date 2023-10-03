@@ -15,12 +15,19 @@
       "all": false,
       "notification": {
         "all": true 
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$APP/*", "$DESKTOP/*"]
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "",
+      "copyright": "Luka Forder",
       "deb": {
         "depends": []
       },
@@ -63,6 +70,7 @@
         "resizable": true,
         "title": "Leafkeeper",
         "width": 1500
+        
       }
     ]
   }

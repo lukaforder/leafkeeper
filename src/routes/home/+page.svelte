@@ -1,17 +1,14 @@
 <script lang="ts">
-	import Grid, { type LayoutChangeDetail } from 'svelte-grid-extended';
-	import { Store } from "tauri-plugin-store-api";
-
-	const store = new Store(".settings.dat");
+	import Grid, { GridItem } from 'svelte-grid-extended';
 
 	const items = [
-		{id: '0', x: 0, y: 0, w: 2, h: 1},
-		{id: '2', x: 2, y: 0, w: 1, h: 1},
-		{id: '1', x: 3, y: 0, w: 1, h: 1},
-		{id: '8', x: 0, y: 1, w: 1, h: 1},
-		{id: '6', x: 1, y: 1, w: 1, h: 1},
-		{id: '3', x: 2, y: 1, w: 2, h: 2},
-		{id: '4', x: 0, y: 2, w: 1, h: 1},
+		{id: '0', x: 0, y: 0, w: 2, h: 1, type: "bookmark", target: "/", color: "#fff", icon: "defaultPlant"},
+		{id: '2', x: 2, y: 0, w: 1, h: 1, type: "bookmark", target: "/"},
+		{id: '1', x: 3, y: 0, w: 1, h: 1, type: "bookmark", target: "/"},
+		{id: '8', x: 0, y: 1, w: 1, h: 1, type: "home", target: "/"},
+		{id: '6', x: 1, y: 1, w: 1, h: 1, type: "plants", target: "/"},
+		{id: '3', x: 2, y: 1, w: 2, h: 2, type: "weather", target: "/"},
+		{id: '4', x: 0, y: 2, w: 1, h: 1, type: "alerts", target: "/"},
 		{id: '7', x: 1, y: 2, w: 1, h: 1},
 		{id: '5', x: 0, y: 4, w: 1, h: 1},
 		{id: '18', x: 5, y: 0, w: 1, h: 1},
@@ -26,64 +23,70 @@
 		{id: '13', x: 1, y: 4, w: 2, h: 1}
 	];
 
-
-	// store.set("itemsLayout", { value: [itemDefault] });
-
-	// const items = store.get("itemsLayout");
-
-	const itemSize = { height: 100, width: 100 };
-
-	function handleGridChange(event: CustomEvent<LayoutChangeDetail>) {
-		console.log(event.detail.item);
-	}
-
+	const itemSize = {width: 100, height: 100};
 
 </script>
-<main>
-
-	<Grid
-		{items}
-		class="grid-container"
-		itemClass="grid-item"
-		gap={20}
-		itemActiveClass="grid-item-active"
-		itemPreviewClass="bg-red-500 rounded"
-		{itemSize} let:item
-		on:change={handleGridChange}>
-		<a href="/"><div>{item.id}</div></a>
-	</Grid>
-</main>
-
+<body>
+<Grid {itemSize} class="grid-container" rows={6} collision="none">
+	{#each items as item}
+		<GridItem
+			x={item.x}
+			y={item.y}
+			w={item.w}
+			h={item.h}
+			class="grid-item"
+			activeClass="grid-item-active"
+			previewClass="bg-green-500 rounded"
+		>
+			<div class="item"><span>{item.id}</span></div>
+		</GridItem>
+	{/each}
+</Grid>
+</body>
 <style>
-	:global(body){
-		margin: 0;
-		padding: 0;
+	span{
+		color:white;
 	}
 
-	main{
-		display: flex;
-		padding: 100px;
+	body{
+		width: 100%;
+		height: 100%;
+		overflow-y: hidden;
+		padding-top: 5em;
+		padding-left: 5em;
+		background-image: url($lib/img/themes/pixel/ExK_p7wVoAg_Rij.png);
+	}
+
+	.item {
+		display: grid;
+		place-items: center;
+		/* background-image: url($lib/img/themes/pixel/5405bf0b02e44e0.png);
+		background-repeat: repeat;
+		background-size: 100px;
+		background-attachment: fixed; */
+		background-color: rgba(71, 71, 71, 0.3);
+    	backdrop-filter: blur(10px);
 		width: 100%;
 		height: 100%;
 	}
 
 	:global(.grid-container) {
-		opacity: 1;
+
 	}
 
 	:global(.grid-item) {
-		transition: width 4s, height 4s;
-		transition: transform 4s;
-		background-color: rgb(188, 188, 188);
+
 	}
 
 	:global(.grid-item-active) {
-		opacity: 0.5;
+		background-color: rgba(0, 0, 0, 0.3);
+    	backdrop-filter: blur(10px);
+		z-index: 999;
 	}
 
 	/* tailwind classes */
-	:global(.bg-red-500) {
-		background-color: rgb(171, 171, 171);
+	:global(.bg-green-500) {
+		background-color: rgb(33, 202, 33);
 	}
 
 	:global(.rounded) {
